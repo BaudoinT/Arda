@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 #include "socket.h"
 
 int creer_serveur(int port){
@@ -24,5 +26,6 @@ int creer_serveur(int port){
 		return -1;
 	}
 	
+	return socket_serveur;
 	
 }
