@@ -1,17 +1,17 @@
 # Fichier Makefile racine
-# Cette variable contient la liste des sous répertoires
+# Cette variable contient la liste des sous rÃ©pertoires
 # pour lesquels il faudra construire un programme.
-# Pour l'instant, seul le serveur web est dans la liste.
+# Pour lâ€™instant, seul le serveur web est dans la liste.
 FOLDERS = webserver
-# Indique à make les règles qui ne correspondent pas à la création
-# d'un fichier
-# make lancera toujours la construction de cette règle si elle est
-# demandée, même si un fichier/répertoire du nom de la cible existe
-# On indique ici la règle all ainsi que les répertoires
-. PHONY : all $ ( FOLDERS )
-# La règle qui sera exécutée si on lance make sans argument
+# Indique Ã  make les rÃ¨gles qui ne correspondent pas Ã  la crÃ©ation
+# dâ€™un fichier
+# make lancera toujours la construction de cette rÃ¨gle si elle est
+# demandÃ©e, mÃªme si un fichier/rÃ©pertoire du nom de la cible existe
+# On indique ici la rÃ¨gle all ainsi que les rÃ©pertoires
+.PHONY : all $ ( FOLDERS )
+# La rÃ¨gle qui sera exÃ©cutÃ©e si on lance make sans argument
 all : $ ( FOLDERS )
-# Cette règle va lancer make dans le répertoire webserver
+# Cette rÃ¨gle va lancer make dans le rÃ©pertoire webserver
 # option -C de make
 webserver :
-make -C webserver
+	make -C webserver
