@@ -1,3 +1,8 @@
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
 #ifndef __SOCKET_H__
 #define __SOCKET_H__
 
@@ -8,13 +13,12 @@ La fonction retourne -1 en cas d'erreur ou le descripteur de la
 socket créée. */
 int creer_serveur ( int port );
 
-struct sockaddr_in {
-sa_family_t sin_family ;  /* address family : AF_INET */
-in_port_t sin_port ; /* port in network byte order */
-struct in_addr sin_addr ; /* internet address */
+/*struct sockaddr_in {
+sa_family_t sin_family ; 
+in_port_t sin_port ; 
+struct in_addr sin_addr ; 
 };
-/* Internet address . */
 struct in_addr {
 uint32_t s_addr ;
-};
+};*/
 # endif
