@@ -22,7 +22,7 @@ int main(int argc,char ** argv){
 	  return 0;
 	}
 
-        char* message_bienvenue="Three Rings for the Elven-kings under the sky,\nSeven for the Dwarf-lords in their halls of stone,\nNine for Mortal Men doomed to die,\nOne for the Dark Lord on his dark throne\nIn the Land of Mordor where the Shadows lie.\nOne Ring to rule them all. One Ring to find them,\nOne Ring to bring them all and in the darkness bind them\nIn the Land of Mordor where the Shadows lie.";
+    char* message_bienvenue="Three Rings for the Elven-kings under the sky,\nSeven for the Dwarf-lords in their halls of stone,\nNine for Mortal Men doomed to die,\nOne for the Dark Lord on his dark throne\nIn the Land of Mordor where the Shadows lie.\nOne Ring to rule them all. One Ring to find them,\nOne Ring to bring them all and in the darkness bind them\nIn the Land of Mordor where the Shadows lie.\n\n";
 	
 	sleep(1);
 	write(socket_client , message_bienvenue , strlen(message_bienvenue));
