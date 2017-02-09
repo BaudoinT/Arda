@@ -1,7 +1,7 @@
 1) il y a une erreur , l'adresse du serveur est déjà utilisé.
 
-2) Le client n'arrive pas a se connecter au serveur.
+2) Le client n'arrive pas à se connecter au serveur.
 
-3) Le client n'arrive pas a se connecter au serveur car celui-ci n'accepte pas les connections IPV6.
+3) Le client n'arrive pas à se connecter au serveur car celui-ci n'accepte pas les connections IPV6.
 
 4) Un seul des deux clients peut se connecter car on crée une seule socket_client dans le serveur.
