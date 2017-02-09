@@ -6,9 +6,17 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "socket.h"
+#include <signal.h>
+
+void initialiser_signaux ( void ){
+	if(signal(SIGPIPE,SIG_DFL) == SIG_ERR){
+		perror ( "Erreur lors de l'initialisation des signaux" );
+	}
+}
 
 
 int main(int argc,char ** argv){
+	initialiser_signaux();
 	int socket_serv=creer_serveur(8080);
 	if(socket_serv == -1){
 		perror("Erreur lors de la création du serveur");
@@ -37,3 +45,5 @@ int main(int argc,char ** argv){
 	}
 	
 }
+
+
