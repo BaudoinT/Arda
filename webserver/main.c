@@ -7,10 +7,28 @@
 #include <fcntl.h>
 #include "socket.h"
 #include <signal.h>
+#include <sys/wait.h>
+
+pid_t pid;
+
+
+void traitement_signal ( int sig ){
+	printf("Signal %d reçu \n",sig );
+	waitpid(pid,NULL,WNOHANG);
+}
 
 void initialiser_signaux ( void ){
 	if(signal(SIGPIPE,SIG_IGN) == SIG_ERR){
 		perror ( "Erreur lors de l'initialisation des signaux" );
+	}
+
+	struct sigaction sa;
+
+	sa.sa_handler = traitement_signal;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	if(sigaction(SIGCHLD,&sa,NULL)==-1){
+		perror("sigaction(SIGCHLD)");
 	}
 }
 
@@ -37,7 +55,6 @@ int main(int argc,char ** argv){
 		sleep(1);
 	
 
-		pid_t pid;
 		if((pid = fork()) == -1) {
 			perror("Erreur lors de la création du processus fils");
 		}else if(pid==0){
@@ -52,6 +69,7 @@ int main(int argc,char ** argv){
 	  			}
 			}
 		}
+		initialiser_signaux();
 	}	
 }
 
