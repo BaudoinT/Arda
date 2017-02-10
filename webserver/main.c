@@ -6,6 +6,11 @@
 #include "socket.h"
 #include <signal.h>
 #include <sys/wait.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <fcntl.h>
+
 
 pid_t pid;
 
@@ -32,9 +37,18 @@ void initialiser_signaux ( void ){
 
 
 int main(int argc,char ** argv){
+
+	int fd  = open("ascii_art",O_RDONLY);
+ 	char *message_bienvenue = malloc(3000*sizeof(char));
+ 	read(fd,message_bienvenue,3000*sizeof(char));
+ 	close(fd);
+
+
 	initialiser_signaux();
 	int status;
 	int socket_serv=creer_serveur(8080);
+
+
 	if(socket_serv == -1){
 		perror("Erreur lors de la création du serveur");
 		return 0;
@@ -49,12 +63,10 @@ int main(int argc,char ** argv){
 	  		return 0;
 		}
 
-    	char* message_bienvenue="Three Rings for the Elven-kings under the sky,\nSeven for the Dwarf-lords in their halls of stone,\nNine for Mortal Men doomed to die,\nOne for the Dark Lord on his dark throne\nIn the Land of Mordor where the Shadows lie.\nOne Ring to rule them all. One Ring to find them,\nOne Ring to bring them all and in the darkness bind them\nIn the Land of Mordor where the Shadows lie.\n\n";
-
 		if((pid = fork()) == -1) {
 			perror("Erreur lors de la création du processus fils");
 		}else if(pid==0){
-			write(socket_client , message_bienvenue , strlen(message_bienvenue));
+			write(socket_client,message_bienvenue,strlen(message_bienvenue));
 		
 	
 			char mess[50];
