@@ -38,14 +38,13 @@ void initialiser_signaux ( void ){
 
 int main(int argc,char ** argv){
 
+	initialiser_signaux();
+
 	int fd  = open("ascii_art",O_RDONLY);
  	char *message_bienvenue = malloc(3000*sizeof(char));
  	read(fd,message_bienvenue,3000*sizeof(char));
  	close(fd);
 
-
-	initialiser_signaux();
-	int status;
 	int socket_serv=creer_serveur(8080);
 
 
@@ -77,8 +76,6 @@ int main(int argc,char ** argv){
 	  			}
 			}
 		}
-		waitpid(pid,&status,WNOHANG);
-
 	}	
 }
 
