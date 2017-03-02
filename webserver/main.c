@@ -38,13 +38,16 @@ void initialiser_signaux ( void ){
 
 int main(int argc,char ** argv){
 
-	initialiser_signaux();
-
+	
+	// ascii art 
 	int fd  = open("ascii_art",O_RDONLY);
  	char *message_bienvenue = malloc(3000*sizeof(char));
  	read(fd,message_bienvenue,3000*sizeof(char));
  	close(fd);
 
+
+
+ 	initialiser_signaux();
 	int socket_serv=creer_serveur(8080);
 
 
@@ -54,9 +57,11 @@ int main(int argc,char ** argv){
 	}
 	
 	int socket_client;
+
 	while(1){
-	
 		socket_client=accept(socket_serv, NULL, NULL);
+		FILE * discript_socket = fdopen(socket_client ,"w+");
+
 		if(socket_client==-1){
 	  		perror("Erreur lors de la connection du client");
 	  		return 0;
@@ -65,15 +70,14 @@ int main(int argc,char ** argv){
 		if((pid = fork()) == -1) {
 			perror("Erreur lors de la création du processus fils");
 		}else if(pid==0){
-			write(socket_client,message_bienvenue,strlen(message_bienvenue));
-		
+			fprintf(discript_socket,message_bienvenue);
 	
-			char mess[50];
+			char recu[50];
+			char prompt[] = "<Arda> ";
 			while(socket_client){
-	  			int length = read(socket_client,mess, 50);
-	  			if(length>0){
-	    			write(socket_client, mess, length);		    
-	  			}
+	  			fgets(recu,50,discript_socket);
+	  			strcat(prompt,recu);
+	  			fprintf(discript_socket,prompt);
 			}
 		}
 	}	
