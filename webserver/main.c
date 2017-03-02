@@ -73,11 +73,15 @@ int main(int argc,char ** argv){
 			fprintf(discript_socket,message_bienvenue);
 	
 			char recu[50];
-			char prompt[] = "<Arda> ";
+			char prompt[]="<Arda> ";
+			
 			while(socket_client){
 	  			fgets(recu,50,discript_socket);
-	  			strcat(prompt,recu);
-	  			fprintf(discript_socket,prompt);
+	  			fprintf(discript_socket, strcat(prompt,recu));
+	  			prompt[8]='\0';
+	  			printf("%s\n",recu );
+	  			//strcpy(prompt, "<Arda> ");
+	  			//printf("%s",recu);
 			}
 		}
 	}	
