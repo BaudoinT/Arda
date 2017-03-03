@@ -36,6 +36,34 @@ void initialiser_signaux ( void ){
 }
 
 
+char ** split1(char chaine[], int i){
+	char tab[];
+	char del=' ';
+	int cpt =0;
+	while(*chaine != '\0'){
+		if(*chaine==del){
+			cpt++,
+		}
+		*chaine++;
+
+		if(cpt==i){
+			&tab = *chaine;
+		}
+
+	}
+	return tab;
+}
+
+
+int verif_rep_client(char rep[]){
+	char *tab;
+	strcat(tab, rep);
+	char ** sp=split1(tab);
+ 	strcmp(*sp,"GET");
+ 	printf("%s",rep );
+ 	return 0;
+ }
+
 int main(int argc,char ** argv){
 
 	
@@ -72,17 +100,24 @@ int main(int argc,char ** argv){
 		}else if(pid==0){
 			fprintf(discript_socket,message_bienvenue);
 	
-			char recu[50];
+			char recu[250];
 			char prompt[]="<Arda> ";
-			
-			while(socket_client){
-	  			fgets(recu,50,discript_socket);
-	  			fprintf(discript_socket, strcat(prompt,recu));
-	  			prompt[8]='\0';
-	  			printf("%s\n",recu );
-	  			//strcpy(prompt, "<Arda> ");
-	  			//printf("%s",recu);
+			fgets(recu,250,discript_socket);
+
+	  		if(verif_rep_client(recu)==0){
+	  			printf("good \n");
+	  		}
+
+			while(fgets(recu,250,discript_socket)!= NULL){
+	  			
+	  			//fprintf(discript_socket, "%s",prompt );
+	  			//fprintf(discript_socket,recu);
+	  			printf("%s",recu);
+
 			}
+			close(socket_client);
+			return 0;
+
 		}
 	}	
 }
