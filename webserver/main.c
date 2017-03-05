@@ -34,6 +34,30 @@ void initialiser_signaux ( void ){
 		perror("sigaction(SIGCHLD)");
 	}
 }
+ 
+char *substr(char *src,int pos,int len) { 
+  char *dest=NULL;                        
+  if (len>0) {                            
+    dest = (char *) malloc(len+1);        
+    strncat(dest,src+pos,len);            
+  }         
+
+  return dest;                            
+}
+
+
+int verif_requete(char *mot){
+	if (strcmp("GET",substr(mot,0,3))){
+		return -1;
+	}
+	if (strcmp("HTTP/1.1",substr(mot,6,8))!=0 && strcmp("HTTP/1.0",substr(mot,6,8))!=0){
+		
+		return -1;
+	}
+	return 0;
+}
+
+
 
 
 int main(int argc,char ** argv){
@@ -72,13 +96,27 @@ int main(int argc,char ** argv){
 		}else if(pid==0){
 			fprintf(discript_socket,message_bienvenue);
 	
-			char recu[50];
+			char recu[250];
 			char prompt[] = "<Arda> ";
-			while(socket_client){
-	  			fgets(recu,50,discript_socket);
-	  			strcat(prompt,recu);
-	  			fprintf(discript_socket,prompt);
+			fgets(recu, 250,discript_socket);
+
+			
+			if(verif_requete(recu)==-1){
+				printf("pas good\n");
 			}
+			else{
+				printf("good\n");
+			}
+			printf("%s",recu);
+
+
+			while((fgets(recu, 250,discript_socket))!= NULL){
+	  			//fprintf(discript_socket,prompt);	
+	  			//fprintf(discript_socket,recu);
+	  			printf("%s",recu);
+			}
+			close(socket_client);
+			return 0;
 		}
 	}	
 }
