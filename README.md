@@ -1,3 +1,3 @@
 # arda
-projet serveur en c semestre 4 dut informatique
+Projet de C semestre 4 DUT Informatique : serveur web
 
