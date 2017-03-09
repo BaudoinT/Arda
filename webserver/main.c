@@ -86,11 +86,12 @@ int main(int argc,char ** argv){
 			perror("Erreur lors de la création du processus fils");
 		}else if(pid==0){			
             char recu[250];
-            fgets(tmp,250,discript_socket);
+            fgets(recu,250,discript_socket);
             if(verif_requete(recu)==-1)
                 fprintf(discript_socket,"HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 17\r\n\r\n400 Bad request\r\n");
             else{
-                fprintf(discript_socket,"HTTP/1.1 200 OK\r\nConnection: open\r\nContent-Length: 1602\r\n\r\n%s\r\n", message_bienvenue);
+              
+                    fprintf(discript_socket,"HTTP/1.1 200 OK\r\nConnection: open\r\nContent-Length: 1602\r\n\r\n%s\r\n", message_bienvenue);
             }
             
             while(fgets(recu,250,discript_socket)!= NULL){
