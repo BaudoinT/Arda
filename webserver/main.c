@@ -50,7 +50,16 @@ int verif_requete(char *mot){
 	if (strcmp("GET",substr(mot,0,3))){
 		return -1;
 	}
-	if (strcmp("HTTP/1.1",substr(mot,6,8))!=0 && strcmp("HTTP/1.0",substr(mot,6,8))!=0){
+	if (strcmp("HTTP/1.1",substr(mot,6,8)) && strcmp("HTTP/1.0",substr(mot,6,8))){
+		return -1;
+	}
+	return 0;
+}
+
+
+int verif_404(char *mot){
+	printf("404 : %s",substr(mot,4,6));
+	if(strcmp("/ ",substr(mot,4,6))){
 		return -1;
 	}
 	return 0;
@@ -87,11 +96,16 @@ int main(int argc,char ** argv){
 		}else if(pid==0){			
             char recu[250];
             fgets(recu,250,discript_socket);
-            if(verif_requete(recu)==-1)
+
+            if(verif_requete(recu)==-1){
                 fprintf(discript_socket,"HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 17\r\n\r\n400 Bad request\r\n");
+            }
+            else if(verif_404(recu)==-1){
+            	fprintf(discript_socket,"HTTP/1.1 404 Page Not Found\r\nConnection: close\r\nContent-Length: 20\r\n\r\n404 Page Not Found\r\n");
+            }
             else{
               
-                    fprintf(discript_socket,"HTTP/1.1 200 OK\r\nConnection: open\r\nContent-Length: 1602\r\n\r\n%s\r\n", message_bienvenue);
+                fprintf(discript_socket,"HTTP/1.1 200 OK\r\nConnection: open\r\nContent-Length: 1602\r\n\r\n%s\r\n", message_bienvenue);
             }
             
             while(fgets(recu,250,discript_socket)!= NULL){
